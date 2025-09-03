@@ -7,6 +7,7 @@
   --color-accent-100: #73a5ff;
   --color-accent-300: #4c8dff;
   --color-accent-500: #397df6;
+  --color-accent-600: #4798DE;
   --color-accent-700: #2f68cc;
   --color-accent-900: #234e99;
 
@@ -143,9 +144,20 @@
 }
 
 body {
-  background: var(--color-light-500);
   color: var(--color-dark-900);
   font-family: 'Inter Variable', sans-serif;
+}
+
+.header a:hover {
+  opacity: 60%;
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-next,
+.ant-carousel .slick-prev:hover,
+.ant-carousel .slick-next:hover {
+  font-size: inherit;
+  color: currentColor;
 }
 
 

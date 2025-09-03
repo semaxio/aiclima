@@ -1,0 +1,10 @@
+.masked {
+    /* Простая маска по форме круга */
+    mask-image: radial-gradient(circle, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
+
+    /* Для браузеров на основе WebKit */
+    -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+
+    /* Можно использовать clip-path для маски */
+    /* clip-path: circle(60% at center); */
+}

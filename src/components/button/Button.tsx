@@ -28,6 +28,8 @@ const variantStyles = {
          hover:text-accent-100 
          focus-visible:outline-accent-500 focus-visible:outline-2 
          disabled:text-accent-900`,
+  basket: `bg-accent-600 w-[140px] h-[40px] text-[16px]`,
+
 }
 
 export const Button = (props: PropsType) => {

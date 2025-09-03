@@ -3,8 +3,8 @@ import { Attributes } from '@/types/apiResponseTypes/apiResopnses'
 
 const attributesList = {
   "CML2_ARTICLE": "Артикул",
-  "ARTIKULY_V_NABORE": "Артикулы в комплекте",
-  "ARTIKULY_TOVAROV_DLYA_KOTORYKH_PODKHODIT_IZ_1S": "Артикулы товаров, для которых подходит, из 1С",
+  // "ARTIKULY_V_NABORE": "Артикулы в комплекте",
+  // "ARTIKULY_TOVAROV_DLYA_KOTORYKH_PODKHODIT_IZ_1S": "Артикулы товаров, для которых подходит, из 1С",
   "BACHOK_V_KOMPLEKTE": "Бачок в комплекте",
   "BEZOBODKOVYY": "Безободковый",
   "BRAND": "Бренд",
@@ -80,7 +80,7 @@ const attributesList = {
   "KARKAS_V_KOMPLEKTE": "Каркас в комплекте",
   "MORE_PHOTO": "Картинки товара",
   "KNOPKA_SMYVA_V_KOMPLEKTE": "Кнопка смыва в комплекте",
-  "KOD_TNVED": "Код ТНВЭД",
+  // "KOD_TNVED": "Код ТНВЭД",
   "KOLICHESTVO_V_INDIVIDUALNOY_UPAKOVKE_SHT": "Количество в индивидуальной упаковке, шт.",
   "KOLICHESTVO_DVEREY": "Количество дверей",
   "KOLICHESTVO_KRYUCHKOV_SHT": "Количество крючков, шт.",
@@ -154,7 +154,7 @@ const attributesList = {
   "MONTAZHNAYA_SHIRINA_MM": "Монтажная ширина, мм",
   "MOSHCHNOST_VT": "Мощность, Вт",
   "NAGRUZKA_KG": "Нагрузка, кг",
-  "PRODUCT_NAME_ERP": "Название товара из 1с",
+  // "PRODUCT_NAME_ERP": "Название товара из 1с",
   "NAZVANIE_TSVETA": "Название цвета",
   "NAZNACHENIE": "Назначение",
   "NALICHIE_ZADNEY_STENKI": "Наличие задней стенки",
@@ -171,7 +171,7 @@ const attributesList = {
   "NAMECHENNYE_OTVERSTIYA_POD_SMESITEL": "Намеченные отверстия под смеситель",
   "NAPRAVLENIE_VYPUSKA": "Направление выпуска",
   "NAPRYAZHENIE_V": "Напряжение, В",
-  "HIT": "Наши предложения",
+  // "HIT": "Наши предложения",
   "NOZHKI_V_KOMPLEKTE": "Ножки в комплекте",
   "OBLAST_PRIMENENIYA": "Область применения",
   "OBORACHIVAEMAYA": "Оборачиваемая",
@@ -180,7 +180,7 @@ const attributesList = {
   "OBEM_SMYVA_L": "Объем смыва, л",
   "OBEM_UPAKOVKI": "Объем упаковки, м³",
   "OBEM_L": "Объем, л",
-  "OPISANIE_DLYA_SAYTA": "Описание для сайта",
+  // "OPISANIE_DLYA_SAYTA": "Описание для сайта",
   "VID_SMYVAYUSHCHEGO_POTOKA": "Организация смывающего потока",
   "ORIENTATSIYA": "Ориентация",
   "ORIENTATSIYA_ZERKALA": "Ориентация зеркала",
@@ -248,8 +248,8 @@ const attributesList = {
   "SMESITEL_V_KOMPLEKTE": "Смеситель в комплекте",
   "SOVMESTIMOST": "Совместимость",
   "SOSTAV_NABORA": "Состав комплекта",
-  "DELIVERY_DAYS": "Срок поставки на склад",
-  "SSYLKA_NA_SERTIFIKATY_SOOTVETSTVIYA_DEKLARATSII_OT": "Ссылка на сертификаты соответствия, декларации, отказные письма",
+  // "DELIVERY_DAYS": "Срок поставки на склад",
+  // "SSYLKA_NA_SERTIFIKATY_SOOTVETSTVIYA_DEKLARATSII_OT": "Ссылка на сертификаты соответствия, декларации, отказные письма",
   "STANDART_PODVODKI": "Стандарт подводки",
   "STIL": "Стиль",
   "STRANA_BRENDA": "Страна бренда",
@@ -262,7 +262,7 @@ const attributesList = {
   "TIP_PODVODKI": "Тип подводки",
   "TIP_SMESITELYA_DLYA_KOTOROGO_PODKHODIT": "Тип смесителя, для которого подходит",
   "TIP_TOVARA": "Тип товара",
-  "TIPY_TOVAROV_DLYA_KOTORYKH_PODKHODIT_S_SAYTA": "Типы товаров, для которых подходит, с сайта",
+  // "TIPY_TOVAROV_DLYA_KOTORYKH_PODKHODIT_S_SAYTA": "Типы товаров, для которых подходит, с сайта",
   "TOLSHCHINA_KARKASA_MM": "Толщина каркаса, мм",
   "TOLSHCHINA_LISTA_MM": "Толщина листа, мм",
   "TOLSHCHINA_POLOTNA_MM": "Толщина полотна, мм",
@@ -315,21 +315,19 @@ const attributesList = {
   "SHIRINA": "Ширина, мм",
   "SHLANG_V_KOMPLEKTE": "Шланг в комплекте",
   "CML2_BAR_CODE": "ШтрихКод",
-  "SHTRIKHKOD": "Штрихкод",
+  // "SHTRIKHKOD": "Штрихкод",
   "EKRAN_V_KOMPLEKTE": "Экран в комплекте",
-  "PRODUCTS_IN_COLLECTION": "Товары в этой коллекции"
+  // "PRODUCTS_IN_COLLECTION": "Товары в этой коллекции"
 }
 
 export type AttributesList = typeof attributesList
 
-function attributeExists<K extends keyof AttributesList>(key: K): boolean | AttributesList[K] {
-  if (key in attributesList) return attributesList[key];
-  return false;
-}
-
-function mapAttributes(attributes: Attributes[]) {
-  const mappedAttributes = []
-  attributes.forEach((attr => {
-  if(attributeExists(attr.code)) mappedAttributes.push([])
-  }))
+export default function mappedAttributes<K extends keyof AttributesList>(attributes: Attributes<K>) {
+  const attrs: [string, string | number][] = [];
+  attributes.forEach(attr => {
+    if (attr.code in attributesList) {
+      attrs.push([attr.name, attr.multiple ? attr.value.join(',') : attr.value]);
+    }
+  });
+  return attrs
 }

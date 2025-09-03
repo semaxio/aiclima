@@ -1,3 +1,4 @@
+import { AttributesList } from '@/features/mappedAttributes/mappedAttributes'
 
 export type ResponseType = {
   current_page: number
@@ -32,4 +33,24 @@ export type ProductCard = {
   url: string;
   stocks: Stock[];
   rrc: string
+  category: string
+
 }
+
+type AttributeSingle<K extends keyof AttributesList = keyof AttributesList> = {
+  code: K;
+  multiple: false;
+  name: string;
+  value: string | number;
+};
+
+type AttributeMultiple<K extends keyof AttributesList = keyof AttributesList> = {
+  code: K;
+  multiple: true;
+  name: string;
+  value: string[] | number[];
+};
+
+export type Attributes<K extends keyof AttributesList = keyof AttributesList> = Array<AttributeSingle<K> | AttributeMultiple<K>>;
+
+export type ArticleCard = ProductCard & { attributes?: Attributes }

@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   // const {} = requestData
 
   const { searchParams } = new URL(request.url)
-
+  // console.log(searchParams) // searchParams.get('name')
   let fieldsData = ''
 
   const requestData = {
@@ -15,12 +15,12 @@ export async function GET(request: Request) {
     name: true,//	Название товара
     brand: true,//	Производитель товара
     // collection: '',//	Коллекция товара
-    description: true,//	Описание товара
-    // url: '',//	Ссылка товара на нашем сайте
+    // description: true,//	Описание товара
+    url: true,//	Ссылка товара на нашем сайте
     images: true,//	Фотографии товара
-    schemas: true,//	Схемы товара
+    schemas: true,//	Схемы товаpnpm ра
     // quantity: '',//	Доступный остаток
-    // category: '',//	Категория товара
+    category: true,//	Категория товара
     price: true,//	Закупочная цена товара
     rrc: true,//	Рекомендуемая розничная цена
     // per_page: '' // лимит 100-500

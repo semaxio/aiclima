@@ -11,6 +11,8 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "@reduxjs/toolkit": "^2.8.2",
+    "antd": "^5.27.1",
+    "dompurify": "^3.2.6",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

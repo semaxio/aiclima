@@ -1,31 +1,23 @@
 'use client'
 
-import { createContext, ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import CatalogItems from '@/components/catalogItems/CatalogItems'
-import { useParams } from 'next/navigation'
+import CatalogProvider from '@/lib/catalog/CatalogProvider'
+import CatalogBreadCrumbs from '@/components/catalogBreadCrumbs/CatalogBreadCrumbs'
 
 type Props = Readonly<{
   children: ReactNode;
 }>
 
-export const CatalogContext = createContext<
-  {
-    catalogId?: string | undefined
-    setCategory: (value: string) => void
-  } | null
->(null)
-
 export default function Layout({ children }: Props) {
-  const { id: catalogId } = useParams<{id?: string}>()
-  const [category, setCategory] = useState(catalogId)
-
   return (
-    <>
-      <CatalogContext value={{ catalogId, setCategory }}>
-        <CatalogItems category={category || '0'} />
+    <CatalogProvider>
+      <div className="pt-[20px] pb-[70px] pl-[280px]">
+        <CatalogItems />
+        <CatalogBreadCrumbs />
         {children}
-      </CatalogContext>
-    </>
+      </div>
+    </CatalogProvider>
   )
 }
 

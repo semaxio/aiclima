@@ -17,6 +17,8 @@ type PropsType = {
     | 'semi_bold_small_text'
     | 'regular_link'
     | 'small_link'
+    | 'menu_item'
+    | 'menu_link'
   asChild?: boolean
 } & HTMLAttributes<HTMLElement>
 
@@ -34,6 +36,8 @@ const defaultTags = {
   semi_bold_small_text: 'span',
   regular_link: 'span',
   small_link: 'span',
+  menu_item: 'h2',
+  menu_link: 'span',
 }
 
 const variantClasses = {
@@ -50,6 +54,8 @@ const variantClasses = {
   semi_bold_small_text: 'text-[12px] leading-small font-semibold',
   regular_link: 'text-[14px] leading-medium font-normal text-accent-500 underline cursor-pointer',
   small_link: 'text-[12px] leading-small font-normal text-accent-500 underline cursor-pointer',
+  menu_item: 'text-[#4798DE] text-[20px] font-bold',
+  menu_link: 'text-[#6F7682] text-[16px] font-medium',
 }
 
 export const Typography = ({

@@ -1,18 +1,9 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { StoreProvider } from '@/app/storeProvider'
 import Header from '@/components/header/Header'
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+import { ConfigProvider } from 'antd'
+import Basket from '@/components/basket/Basket'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -28,11 +19,24 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased p-[20px] pt-[90px]`}
+      className={`px-[45px] pt-[125px]`}
     >
     <StoreProvider>
-      <Header />
-      {children}
+      <ConfigProvider
+        theme={{
+          components: {
+            Carousel: {
+              // dotOffset: 0,
+              // dotHeight: 10
+
+            },
+          },
+        }}
+      >
+        <Header />
+        {children}
+        <Basket/>
+      </ConfigProvider>
     </StoreProvider>
     </body>
     </html>
