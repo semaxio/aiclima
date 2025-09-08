@@ -1,10 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import Catalog from '@/assets/mobilemenu/catalog.svg'
-import Contacts from '@/assets/mobilemenu/contacts.svg'
-import Homepage from '@/assets/mobilemenu/homepage.svg'
-import Menu from '@/assets/mobilemenu/menu.svg'
+import Catalog from '@/assets/mobilemenu/catalog1.svg'
+import Contacts from '@/assets/mobilemenu/contact1.svg'
+import Homepage from '@/assets/mobilemenu/home1.svg'
+import Menu from '@/assets/mobilemenu/menu1.svg'
 import Link from 'next/link'
 
 
