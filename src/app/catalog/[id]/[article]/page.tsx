@@ -1,13 +1,11 @@
 'use client'
 
-import { useParams } from 'next/navigation'
-import { useContext, useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { Modal, Spin } from 'antd'
 import { ArticleCard } from '@/types/apiResponseTypes/apiResopnses'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
-import Link from 'next/link'
-import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import ArrowLeft from '@/assets/arrowleft.svg'
 import Resize from '@/assets/resize.svg'
 import PrevImage from '@/components/prevImage/PrevImage'
@@ -21,14 +19,12 @@ import BasketButton from '@/components/basketButton/BasketButton'
 import { Button } from '@/components/button/Button'
 import mappedAttributes from '@/features/mappedAttributes/mappedAttributes'
 import s from './style.module.css'
-import { useRouter } from 'next/navigation'
 
 
 export default function Product() {
   const params = useParams<{ article: string }>()
   const { article } = params
   const router = useRouter()
-  const { catalogId } = useContext(CatalogContext)
 
   const dispatch = useDispatch()
   const productCount = useAppSelector(selectProductCountByArticle(article))

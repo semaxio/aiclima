@@ -34,7 +34,6 @@ export type ProductCard = {
   stocks: Stock[];
   rrc: string
   category: string
-
 }
 
 type AttributeSingle<K extends keyof AttributesList = keyof AttributesList> = {
