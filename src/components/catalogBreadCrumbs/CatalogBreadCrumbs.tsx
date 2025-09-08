@@ -8,9 +8,31 @@ import ArrowRight from '@/assets/arrowRight.svg'
 import filterCategory from '@/notes/filterCategory'
 import { useContext } from 'react'
 import { CatalogContext } from '@/lib/catalog/CatalogProvider'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function CatalogBreadCrumbs() {
   const { catalogId } = useContext(CatalogContext)
+  const { isDesktop } = useMediaQuery()
+
+  if (!isDesktop) {
+    return (
+      <div className="flex gap-[55px] items-center w-full">
+        <div className="flex gap-[6px] items-center">
+          <Link href="/" className='items-center flex'><Typography variant="menu_link" className="text-[10px]">Главная</Typography></Link>
+          <Image src={ArrowRight} width={10} height={10} alt="ArrowRight" />
+          <Link href="/catalog" className='items-center flex'><Typography variant="menu_link" className="text-[10px]">Все
+            категории</Typography></Link>
+          {catalogId && <>
+            <Image src={ArrowRight} width={10} height={10} alt="ArrowRight" />
+            <Link href={`/catalog/${catalogId}`} className='flex items-center'>
+              <Typography variant="menu_link" className="text-[10px]">{filterCategory[catalogId]}</Typography>
+            </Link>
+          </>
+          }
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex gap-[55px] fixed top-[70px] left-[45px] items-center z-[900] bg-white w-full h-[70px]">

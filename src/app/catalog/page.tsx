@@ -14,6 +14,7 @@ import Image from 'next/image'
 import { Typography } from '@/components/typography/Typography'
 import Link from 'next/link'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 const popularCategories = [
   {
@@ -57,16 +58,34 @@ const popularCategories = [
 
 const Catalog = () => {
 
+  const { isDesktop } = useMediaQuery()
+
+  if (!isDesktop) {
+    return (
+      <div className='flex gap-[8px] flex-col pt-[15px] pb-[25px]'>
+        {
+          Object.entries(filterCategory).map(c => (
+            <Link href={`/catalog/${c[0]}`}
+              key={`category-${c[0]}`}
+              className="w-[100%] text-gray-500 text-[14px] font-medium border border-gray-200 rounded-[9px] py-[5px] px-[8px]"
+            >
+              {c[1]}
+            </Link>),
+          )}
+      </div>
+    )
+  }
+
 
   return (
     <div className="w-full text-center">
       <Typography variant="menu_item" className="">Популярные категории</Typography>
       <div className="w-full flex flex-wrap gap-[20px] justify-center mt-[15px]" onClick={() => handleRemoveScrollY()}>{
         popularCategories.map(c => (
-          <Link key={c.title} href={`catalog/${c.category}`}>
+          <Link key={c.title} href={`/catalog/${c.category}`}>
             <div
               className="gap-[20px] w-[270px] h-[240px] bg-[#F1F2F6] rounded-[5px] flex flex-col items-center justify-center hover:shadow-[5px_5px_10px_rgba(0,0,0,0.3)] transition-shadow duration-300">
-              <Image src={c.imageUrl} alt={c.title} height={140} />
+              <Image src={c.imageUrl} alt={c.title} height={100} />
               <Typography variant="regular_text_14" className="text-[#4798DE] font-medium">{c.title}</Typography>
             </div>
           </Link>

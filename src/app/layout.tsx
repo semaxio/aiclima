@@ -1,16 +1,20 @@
-import type { Metadata } from 'next'
+'use client'
+
 import './globals.css'
 import { StoreProvider } from '@/app/storeProvider'
 import Header from '@/components/header/Header'
 import { ConfigProvider } from 'antd'
 import Basket from '@/components/basket/Basket'
-import '@ant-design/v5-patch-for-react-19';
+import '@ant-design/v5-patch-for-react-19'
+import { twMerge } from 'tailwind-merge'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import MobileBottomMenu from '@/components/mobileBottomMenu/MobileBottomMenu'
 
 
-export const metadata: Metadata = {
-  title: 'AiClima',
-  description: 'AiClima',
-}
+// export const metadata: Metadata = {
+//   title: 'AiClima',
+//   description: 'AiClima',
+// }
 
 export default function RootLayout({
                                      children,
@@ -18,11 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const { isDesktop } = useMediaQuery()
+
   return (
     <html lang="en">
-    <body
-      className={`px-[45px] pt-[125px]`}
-    >
+    <body className={twMerge(isDesktop ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[20px]')}>
     <StoreProvider>
       <ConfigProvider
         theme={{
@@ -37,7 +41,8 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <Basket/>
+        <Basket />
+        {!isDesktop && <MobileBottomMenu />}
       </ConfigProvider>
     </StoreProvider>
     </body>
