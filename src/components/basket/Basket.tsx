@@ -9,7 +9,6 @@ import { Button } from '@/components/button/Button'
 import Link from 'next/link'
 import BasketItems from '@/components/basketItems/BasketItems'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import { describe } from 'node:test'
 
 export default function Basket() {
 

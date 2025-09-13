@@ -8,7 +8,6 @@ import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
-import { twMerge } from 'tailwind-merge'
 
 const Catalog = () => {
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
