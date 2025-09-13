@@ -10,6 +10,8 @@ import BasketItems from '@/components/basketItems/BasketItems'
 import CheckoutForm from '@/components/checkoutForm/CheckoutForm'
 import { Result, Spin } from 'antd'
 import { useState } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function Page() {
 
@@ -17,6 +19,7 @@ export default function Page() {
   const basket = useAppSelector(selectBasket)
   const [isSending, setIsSending] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const { isMobile } = useMediaQuery()
 
   const clearBasketHandler = () => dispatch(clearBasket())
 
@@ -65,7 +68,10 @@ export default function Page() {
         <Button
           onClick={clearBasketHandler}
           variant="outline"
-          className="flex gap-[10px] text-[14px]">
+          className={twMerge(
+            'flex gap-[10px] text-[14px]',
+            isMobile && 'hidden',
+          )}>
           <Image src={Recycle} width={15} height={15} alt={'recycle'} />
           Очистить всю корзину
         </Button>
@@ -80,6 +86,13 @@ export default function Page() {
           />
         </div>
       </div>
+      <Button
+        onClick={clearBasketHandler}
+        variant="outline"
+        className="flex gap-[10px] text-[14px] mt-[50px] mb-[20px] mx-auto">
+        <Image src={Recycle} width={15} height={15} alt={'recycle'} />
+        Очистить всю корзину
+      </Button>
     </div>
   )
 }

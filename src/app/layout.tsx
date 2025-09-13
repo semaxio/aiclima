@@ -38,7 +38,10 @@ export default function RootLayout({
               dotActiveWidth: 3,
               dotOffset: 5
             },
-          },
+            Pagination: {
+              colorText	: '#63b0ff',
+              fontSize: 12
+            }}
         }}
       >
         <Header />

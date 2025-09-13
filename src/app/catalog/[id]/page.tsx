@@ -8,6 +8,7 @@ import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
+import { twMerge } from 'tailwind-merge'
 
 const Catalog = () => {
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
@@ -17,6 +18,7 @@ const Catalog = () => {
   const [productCount, setProductCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const { isDesktop } = useMediaQuery()
+
 
   useLayoutEffect(() => {
     const pageY = localStorage.getItem('pageY')
@@ -50,16 +52,21 @@ const Catalog = () => {
 
   if (!isDesktop) {
     if (isLoading) {
-      return <Spin className="fixed top-[50vh] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'} />
+      return (
+        <div className='h-[80vh]'>
+          <Spin className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'} />
+        </div>
+      )
     }
 
     return (
-      <div className="pt-[10px]">
+      <div className="pt-[10px] pb-[45px]">
         <div className="flex flex-wrap gap-[5px] justify-center">
           {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)}
         </div>
         {/*{productCount && <Pagination*/}
         {productCount > 99 && <Pagination
+
           size="small"
           onChange={(page) => paginationHandler(page)}
           defaultCurrent={page} total={productCount}

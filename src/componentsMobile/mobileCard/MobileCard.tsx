@@ -70,7 +70,7 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
 
   return (
     <div
-      className="relative bg-white rounded-[5px] shadow-md overflow-hidden md:max-w-2xl w-[49%] max-w-[240px] pb-[35px]">
+      className="relative bg-white rounded-[5px] shadow-md overflow-hidden md:max-w-2xl w-[49%] max-w-[240px] pb-[45px]">
       {/* Галерея изображений */}
       <Carousel
         dotPosition={'bottom'}
@@ -85,7 +85,7 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
       </Carousel>
 
       {/* Информация о товаре */}
-      <div className="p-[15px]">
+      <div className="p-[5px]">
         <Link href={`/catalog/${catalogId}/${encodedUrl}`} onClick={handleScroll}>
           <div className="flex justify-between items-start">
             <div>

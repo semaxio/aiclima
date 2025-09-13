@@ -7,6 +7,8 @@ import '@ant-design/v5-patch-for-react-19'
 import emailjs from 'emailjs-com'
 import { BasketArray, clearBasket, selectBasket } from '@/lib/appSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { twMerge } from 'tailwind-merge'
 
 
 type FieldType = {
@@ -51,6 +53,7 @@ const formatBasketHtml = (basket: BasketArray, basketSum: number) => {
 export default function CheckoutForm({ basketSum, setIsSendingAction, setIsSuccessAction }: Props) {
   const basket = useAppSelector(selectBasket)
   const dispatch = useAppDispatch()
+  const { isMobile } = useMediaQuery()
 
   const [isChecked, setIsChecked] = useState(false)
   const [form] = Form.useForm()
@@ -81,14 +84,14 @@ export default function CheckoutForm({ basketSum, setIsSendingAction, setIsSucce
     <Form
       form={form}
       name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16}}
+      labelCol={{ span: isMobile ? 2 : 8 }}
+      wrapperCol={{ span: 16 }}
       initialValues={{ phone: 7 }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
-      size='middle'
-      className='w-[450px]'
+      size="middle"
+      className={twMerge(isMobile ? '300px' : 'w-[450px]')}
     >
       <Form.Item<FieldType>
         label="Ваше имя :"
