@@ -16,7 +16,7 @@ export default function CatalogBreadCrumbs() {
 
   if (!isDesktop) {
     return (
-      <div className="flex gap-[55px] w-[100vw] items-cente fixed left-0 h-[35px] top-[60px] px-[20px] bg-white z-[1000]">
+      <div className="flex gap-[55px] w-[100vw] items-cente fixed left-0 h-[35px] top-[60px] px-[10px] bg-white z-[1000]">
         <div className="flex gap-[6px] items-center">
           <Link href="/" className='items-center flex'><Typography variant="menu_link" className="text-[11px]">Главная</Typography></Link>
           <Image src={ArrowRight} width={10} height={10} alt="ArrowRight" />

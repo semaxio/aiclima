@@ -68,17 +68,11 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
     localStorage.setItem('category', String(catalogId))
   }
 
-
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide)
-  }
-
   return (
     <div
       className="relative bg-white rounded-[5px] shadow-md overflow-hidden md:max-w-2xl w-[49%] max-w-[240px] pb-[35px]">
       {/* Галерея изображений */}
       <Carousel
-        afterChange={onChange}
         dotPosition={'bottom'}
         dots={imagesAndSchemas.length > 1 ? { className: s.customDots } : false}>
         {
@@ -103,7 +97,7 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
                   {rrc.split('.')[0]}р.
                 </Typography>
               </div>
-              <p className={'text-[12px] hover:text-accent-600'}>
+              <p className={'text-[12px] hover:text-accent-600 leading-[15px]'}>
                 {name.length > 99 ? normalizedName.substring(0, 99) + '...' : normalizedName}
               </p>
             </div>

@@ -26,15 +26,17 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-    <body className={twMerge(isDesktop ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[20px]')}>
+    <body className={twMerge(isDesktop ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[5px]')}>
     <StoreProvider>
       <ConfigProvider
         theme={{
           components: {
             Carousel: {
-              // dotOffset: 0,
-              // dotHeight: 10
-
+              dotHeight: 3,
+              dotWidth: 3,
+              dotGap: 1.5,
+              dotActiveWidth: 3,
+              dotOffset: 5
             },
           },
         }}
