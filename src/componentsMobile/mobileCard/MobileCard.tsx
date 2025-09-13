@@ -1,19 +1,28 @@
 'use client'
 
-
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '@/lib/hooks'
 import { selectProductCountByArticle } from '@/lib/selectors'
 import { addProduct, clearProduct } from '@/lib/appSlice'
 import Image from 'next/image'
-import PrevImage from '@/components/prevImage/PrevImage'
-import NexImage from '@/components/nextImage/NextImage'
 import Link from 'next/link'
 import { Typography } from '@/components/typography/Typography'
 import { ProductCard } from '@/types/apiResponseTypes/apiResopnses'
 import MobileBasketButton from '@/componentsMobile/mobileBasketButton/MobileBasketButton'
+import { Carousel } from 'antd'
+import s from './s.module.css'
+
+
+// const contentStyle: React.CSSProperties = {
+//   margin: 0,
+//   height: '160px',
+//   lineHeight: '160px',
+//   textAlign: 'center',
+//   background: '#364d79',
+// }
+
 
 export default function MobileCard({ item, page }: { item: ProductCard, page: number }) {
   const {
@@ -23,26 +32,15 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
     url,
     images,
     schemas,
-    // collection,
-    // description,
-    // stocks,
     category,
     rrc,
   } = item
 
   const { catalogId } = useContext(CatalogContext)
   const dispatch = useDispatch()
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const productCount = useAppSelector(selectProductCountByArticle(article))
   const imagesAndSchemas = [...images, ...schemas]
   const encodedUrl = encodeURIComponent(article)
-
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % imagesAndSchemas.length)
-  }
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + imagesAndSchemas.length) % imagesAndSchemas.length)
-  }
 
   function addProductHandler() {
     dispatch(addProduct({
@@ -55,15 +53,12 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
         images,
         schemas,
         rrc,
-        category
+        category,
       },
     }))
-    console.log(item)
   }
 
-  function clearProductHandler() {
-    dispatch(clearProduct({ article: article }))
-  }
+  const clearProductHandler = () => dispatch(clearProduct({ article: article }))
 
   const normalizedName = name.replace(/\u00A0/g, ' ')
 
@@ -74,34 +69,26 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
   }
 
 
-  return (
-    <div className="relative bg-white rounded-[5px] shadow-md overflow-hidden md:max-w-2xl w-[49%] max-w-[240px] pb-[35px]">
-      {/* Галерея изображений */}
-      <div className="relative h-[240px] w-full bg-white">
-        <Image
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="bg-white object-contain"
-          src={imagesAndSchemas[currentImageIndex]}
-          alt={name}
-        />
-        {imagesAndSchemas.length > 1 && (
-          <>
-            <PrevImage handlerAction={prevImage} />
-            <NexImage handlerAction={nextImage} />
-          </>
-        )}
+  const onChange = (currentSlide: number) => {
+    console.log(currentSlide)
+  }
 
-        <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
-          {imagesAndSchemas.length > 1 && imagesAndSchemas.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`h-2 w-2 rounded-full ${currentImageIndex === index ? 'bg-blue-500' : 'bg-gray-300'} cursor-pointer`}
-            />
-          ))}
-        </div>
-      </div>
+  return (
+    <div
+      className="relative bg-white rounded-[5px] shadow-md overflow-hidden md:max-w-2xl w-[49%] max-w-[240px] pb-[35px]">
+      {/* Галерея изображений */}
+      <Carousel
+        afterChange={onChange}
+        dotPosition={'bottom'}
+        dots={imagesAndSchemas.length > 1 ? { className: s.customDots } : false}>
+        {
+          imagesAndSchemas.map(img => (
+            <div key={img} className="h-[220px] w-full relative">
+              <Image fill src={img} alt={'image'} className="w-full object-contain" />
+            </div>
+          ))
+        }
+      </Carousel>
 
       {/* Информация о товаре */}
       <div className="p-[15px]">

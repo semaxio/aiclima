@@ -1,0 +1,7 @@
+.customDots {
+    /*background-color: green;*/
+}
+.customDots li{
+    background-color: #c0d0e7;
+    border: 1px solid  #c0d0e7;
+}

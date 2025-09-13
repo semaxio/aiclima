@@ -55,7 +55,7 @@ const Catalog = () => {
 
     return (
       <div className="pt-[10px]">
-        <div className="flex flex-wrap gap-[1px] justify-center">
+        <div className="flex flex-wrap gap-[5px] justify-center">
           {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)}
         </div>
         {/*{productCount && <Pagination*/}
