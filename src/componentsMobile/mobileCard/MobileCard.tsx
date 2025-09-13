@@ -12,8 +12,8 @@ import PrevImage from '@/components/prevImage/PrevImage'
 import NexImage from '@/components/nextImage/NextImage'
 import Link from 'next/link'
 import { Typography } from '@/components/typography/Typography'
-import BasketButton from '@/components/basketButton/BasketButton'
 import { ProductCard } from '@/types/apiResponseTypes/apiResopnses'
+import MobileBasketButton from '@/componentsMobile/mobileBasketButton/MobileBasketButton'
 
 export default function MobileCard({ item, page }: { item: ProductCard, page: number }) {
   const {
@@ -125,7 +125,7 @@ export default function MobileCard({ item, page }: { item: ProductCard, page: nu
 
         {/* Кнопка перехода */}
       </div>
-      <BasketButton
+      <MobileBasketButton
         className="absolute w-[80%] bottom-[10px] left-[50%] translate-x-[-50%] text-[10px]"
         productCount={productCount}
         addProductAction={addProductHandler} clearProductAction={clearProductHandler} />

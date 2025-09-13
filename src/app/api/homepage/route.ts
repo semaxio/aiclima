@@ -39,14 +39,15 @@ export async function GET(request: Request) {
   })
 
   const externalResponse = await fetch(`${externalApiUrl}`, {
-    // const externalResponse = await fetch(`${process.env.BASE_URL}/?&fields[]=show_all&page=19&fields[]=rrc`, {
-    credentials: 'include',
-    headers: {
-      'Authorization': `Bearer-Token ${process.env.API_KEY}`,
-      'Content-type': 'application/json, application',
-      'Accept': 'application/json',
-    },
-  })
+      // const externalResponse = await fetch(`${process.env.BASE_URL}/?&fields[]=show_all&page=19&fields[]=rrc`, {
+      credentials: 'include',
+      headers: {
+        'Authorization': `Bearer-Token ${process.env.API_KEY}`,
+        'Content-type': 'application/json, application',
+        'Accept': 'application/json',
+      },
+    })
+
 
   const data = await externalResponse.json()
   return NextResponse.json(data)

@@ -32,6 +32,7 @@ const Catalog = () => {
         setProductCount(data.total)
         // console.log(data)
       })
+      .catch(err => console.log(err))
       .finally(() => setIsLoading(false))
   }, [catalogId, page])
 
@@ -63,7 +64,7 @@ const Catalog = () => {
           onChange={(page) => paginationHandler(page)}
           defaultCurrent={page} total={productCount}
           showSizeChanger={false} pageSize={100}
-          className="h-[30px] bg-white flex justify-center items-center fixed bottom-[65px] border border-red-500 w-[100%] left-0"
+          className="h-[30px] bg-white flex justify-center items-center fixed bottom-[65px] w-[100%] left-0"
         />}
       </div>
     )
