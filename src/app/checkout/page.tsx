@@ -86,13 +86,17 @@ export default function Page() {
           />
         </div>
       </div>
-      <Button
-        onClick={clearBasketHandler}
-        variant="outline"
-        className="flex gap-[10px] text-[14px] mt-[50px] mb-[20px] mx-auto">
-        <Image src={Recycle} width={15} height={15} alt={'recycle'} />
-        Очистить всю корзину
-      </Button>
+      {
+        isMobile && (
+          <Button
+            onClick={clearBasketHandler}
+            variant="outline"
+            className="flex gap-[10px] text-[14px] mt-[50px] mb-[20px] w-full">
+            <Image src={Recycle} width={15} height={15} alt={'recycle'} />
+            Очистить всю корзину
+          </Button>
+        )
+      }
     </div>
   )
 }

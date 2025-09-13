@@ -84,7 +84,7 @@ export default function CheckoutForm({ basketSum, setIsSendingAction, setIsSucce
     <Form
       form={form}
       name="basic"
-      labelCol={{ span: isMobile ? 2 : 8 }}
+      labelCol={{ span: isMobile ? 1.5 : 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ phone: 7 }}
       onFinish={onFinish}
