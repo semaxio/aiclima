@@ -8,7 +8,7 @@ import Basket from '@/components/basket/Basket'
 import '@ant-design/v5-patch-for-react-19'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import MobileBottomMenu from '@/components/mobileBottomMenu/MobileBottomMenu'
+import MobileBottomMenu from '@/componentsMobile/mobileBottomMenu/MobileBottomMenu'
 
 
 // export const metadata: Metadata = {

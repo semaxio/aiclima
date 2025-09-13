@@ -21,7 +21,7 @@ export default function BasketButton({ productCount, addProductAction, clearProd
             onClick={addProductAction}
             className="h-[30px] w-full flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600"
           >
-            <Typography className={'text-medium-14'}>В корзину</Typography>
+            <Typography className={'text-[10px]'}>В корзину</Typography>
             <Image width={20} height={20} className={'ml-[15px]'} src={basket} alt={'basket'} />
           </Button>
         </div>

@@ -24,9 +24,9 @@ export default function Header() {
   if (!isDesktop) {
     return (
       <header
-        className={'bg-white fixed top-0 left-0 right-0 h-[70px] border-b-gray-100 border-b px-[20px] z-[1000] flex justify-between items-center'}>
+        className={'bg-white fixed top-0 left-0 right-0 h-[60px] border-b-gray-100 border-b px-[20px] z-[1000] flex justify-between items-center'}>
         <Typography variant={'h1'} className={'text-accent-600'}>
-          <Link href={'/'}>AICLIMA</Link>
+          <Link onClick={removePagination} href={'/'}>AICLIMA</Link>
         </Typography>
         <BasketIcon basketHandler={basketHandler} productCount={productCount} />
       </header>

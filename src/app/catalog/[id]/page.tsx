@@ -6,6 +6,8 @@ import Card from '@/components/card/Card'
 import { Pagination, Spin } from 'antd'
 import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
 
 const Catalog = () => {
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
@@ -14,15 +16,16 @@ const Catalog = () => {
   const [page, setPage] = useState(storagePage || 1)
   const [productCount, setProductCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const { isDesktop } = useMediaQuery()
 
   useLayoutEffect(() => {
-      const pageY = localStorage.getItem('pageY')
-      if (pageY) window.scrollTo({ top: Number(pageY) })
+    const pageY = localStorage.getItem('pageY')
+    if (pageY) window.scrollTo({ top: Number(pageY) })
   }, [products])
 
   useEffect(() => {
     setIsLoading(true)
-    fetch(`/api/homepage?page=${page}&filter_category=${catalogId}`, {cache: 'force-cache'})
+    fetch(`/api/homepage?page=${page}&filter_category=${catalogId}`, { cache: 'force-cache' })
       .then(res => res.json())
       .then(data => {
         setProducts(data)
@@ -34,7 +37,7 @@ const Catalog = () => {
 
   useEffect(() => {
     const pageY = localStorage.getItem('pageY')
-    if(pageY && pageY === window.pageYOffset.toString()) handleRemoveScrollY()
+    if (pageY && pageY === window.pageYOffset.toString()) handleRemoveScrollY()
   }, [products])
 
   function paginationHandler(page: number) {
@@ -42,6 +45,28 @@ const Catalog = () => {
     localStorage.setItem('pageNumber', page.toString())
     window.scrollTo({ top: 0 })
     handleRemoveScrollY()
+  }
+
+  if (!isDesktop) {
+    if (isLoading) {
+      return <Spin className="fixed top-[50vh] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'} />
+    }
+
+    return (
+      <div className="pt-[10px]">
+        <div className="flex flex-wrap gap-[1px] justify-center">
+          {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)}
+        </div>
+        {/*{productCount && <Pagination*/}
+        {productCount > 99 && <Pagination
+          size="small"
+          onChange={(page) => paginationHandler(page)}
+          defaultCurrent={page} total={productCount}
+          showSizeChanger={false} pageSize={100}
+          className="h-[30px] bg-white flex justify-center items-center fixed bottom-[65px] border border-red-500 w-[100%] left-0"
+        />}
+      </div>
+    )
   }
 
   return (
