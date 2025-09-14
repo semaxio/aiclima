@@ -51,6 +51,9 @@ export async function GET(request: Request) {
       },
     })
     // console.log(externalResponse)
+    if(!externalResponse.ok) {
+      return NextResponse.json({ error: 'server error' }, { status: 500 })
+    }
     data = await externalResponse.json()
     // console.log(data)
   } catch (err) {

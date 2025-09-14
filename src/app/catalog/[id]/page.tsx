@@ -101,7 +101,7 @@ const Catalog = () => {
           : (
             <div className="px-[30px] flex flex-wrap gap-[25px] justify-center">
               {
-                products.data?.length
+                products?.data?.length > 0
                   ? products.data.map(item => <Card key={item.article} item={item} page={page} />)
                   : <ServerWorks />
               }
