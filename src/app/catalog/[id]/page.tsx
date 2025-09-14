@@ -8,12 +8,14 @@ import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
+import ServerError from '@/components/serverError/ServerError'
 
 const Catalog = () => {
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
   const { catalogId } = useContext(CatalogContext)
   const [products, setProducts] = useState<ResponseType>({} as ResponseType)
   const [page, setPage] = useState(storagePage || 1)
+  const [error, setError] = useState<string | null>(null)
   const [productCount, setProductCount] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const { isDesktop } = useMediaQuery()
@@ -27,13 +29,19 @@ const Catalog = () => {
   useEffect(() => {
     setIsLoading(true)
     fetch(`/api/homepage?page=${page}&filter_category=${catalogId}`, { cache: 'force-cache' })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 500) throw res
+        return res.json()
+      })
       .then(data => {
         setProducts(data)
         setProductCount(data.total)
         // console.log(data)
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setError('server error')
+        console.log(err)
+      })
       .finally(() => setIsLoading(false))
   }, [catalogId, page])
 
@@ -49,10 +57,13 @@ const Catalog = () => {
     handleRemoveScrollY()
   }
 
+
+  if (error) return <ServerError />
+
   if (!isDesktop) {
     if (isLoading) {
       return (
-        <div className='h-[80vh]'>
+        <div className="h-[80vh]">
           <Spin className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'} />
         </div>
       )
@@ -61,7 +72,8 @@ const Catalog = () => {
     return (
       <div className="pt-[10px] pb-[45px]">
         <div className="flex flex-wrap gap-[5px] justify-center">
-          {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)}
+          {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item}
+                                                                          page={page} />)}
         </div>
         {/*{productCount && <Pagination*/}
         {productCount > 99 && <Pagination

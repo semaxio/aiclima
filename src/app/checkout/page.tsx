@@ -52,7 +52,10 @@ export default function Page() {
   if (basket.length === 0) {
     return (
       <div className="h-full w-full flex flex-col gap-[25px] justify-center items-center">
-        <h2 className="text-accent-600 text-[25px] font-medium">Товары к оформлению отсутствуют</h2>
+        <h2 className={twMerge(
+          "text-accent-600 font-medium",
+          isMobile ? 'text-[15px] mt-[200px]' :  'text-[25px]'
+        )}>Товары к оформлению отсутствуют</h2>
         <Link href={'/catalog'}>
           <Button variant="primary" className="text-[#fff]">В каталог</Button>
         </Link>

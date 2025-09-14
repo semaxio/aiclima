@@ -19,6 +19,7 @@ import BasketButton from '@/components/basketButton/BasketButton'
 import { Button } from '@/components/button/Button'
 import mappedAttributes from '@/features/mappedAttributes/mappedAttributes'
 import s from './style.module.css'
+import ServerError from '@/components/serverError/ServerError'
 
 
 export default function Product() {
@@ -29,6 +30,7 @@ export default function Product() {
   const dispatch = useDispatch()
   const productCount = useAppSelector(selectProductCountByArticle(article))
   const [product, setProduct] = useState<ArticleCard | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [imageIndex, setImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,18 +40,24 @@ export default function Product() {
     fetch(`/api/product?article=${article}`, { cache: 'force-cache' })
       .then(res => res.json())
       .then(data => {
-        if (data.data[0].article) {
-          setIsLoading(false)
+        if (data.data.length === 0) throw new Error('server error : []')
+        if (data.data[0]?.article) {
           setProduct(data.data[0])
         }
-        // console.log(data.data[0])
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        setError('server error')
+        console.log(err)
+      })
+      .finally(() => setIsLoading(false))
   }, [article])
 
+  if (error) return <ServerError />
 
-  if (isLoading || !product) return <div className="w-full h-[70vh] flex items-center justify-center"><Spin
-    size={'large'} /></div>
+  if (isLoading || !product) {
+    return <div className="w-full h-[70vh] flex items-center justify-center"><Spin
+      size={'large'} /></div>
+  }
 
   const imagesAndSchemas = [...product.images, ...product.schemas]
 
@@ -84,7 +92,7 @@ export default function Product() {
           images: product.images,
           schemas: product.schemas,
           rrc: product.rrc,
-          category: product.category
+          category: product.category,
         },
       }))
     }
@@ -96,8 +104,9 @@ export default function Product() {
 
   return (
     <div className="pt-[70px] relative">
-      <div className="text-[14px] flex items-center gap-[8px] hover:opacity-60 absolute top-[15px] left-[15px] cursor-pointer"
-            onClick={() => router.back()}>
+      <div
+        className="text-[14px] flex items-center gap-[8px] hover:opacity-60 absolute top-[15px] left-[15px] cursor-pointer"
+        onClick={() => router.back()}>
         <Image width={16} height={8} src={ArrowLeft} alt={'ArrowLeft'} />
         Назад
       </div>

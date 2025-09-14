@@ -37,6 +37,12 @@ export async function GET(request: Request) {
     },
   })
   // console.log(externalResponse)
-  const data = await externalResponse.json()
+  let data
+  try {
+    data = await externalResponse.json()
+  } catch (err) {
+    return NextResponse.json({ error: JSON.stringify(err) }, { status: 500 })
+  }
+
   return NextResponse.json(data)
 }
