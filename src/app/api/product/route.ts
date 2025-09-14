@@ -28,17 +28,17 @@ export async function GET(request: Request) {
 
   const externalApiUrl = new URL(`${process.env.BASE_URL}`)
 
-  const externalResponse = await fetch(`${externalApiUrl}/?filter_article[]=${article}&fields[]=show_all&attrs[]=show_all`, {
-    credentials: 'include',
-    headers: {
-      'Authorization': `Bearer-Token ${process.env.API_KEY}`,
-      'Content-type': 'application/json, application',
-      'Accept': 'application/json',
-    },
-  })
   // console.log(externalResponse)
   let data
   try {
+    const externalResponse = await fetch(`${externalApiUrl}/?filter_article[]=${article}&fields[]=show_all&attrs[]=show_all`, {
+      credentials: 'include',
+      headers: {
+        'Authorization': `Bearer-Token ${process.env.API_KEY}`,
+        'Content-type': 'application/json, application',
+        'Accept': 'application/json',
+      },
+    })
     data = await externalResponse.json()
   } catch (err) {
     return NextResponse.json({ error: JSON.stringify(err) }, { status: 500 })

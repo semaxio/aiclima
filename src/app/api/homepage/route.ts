@@ -38,21 +38,21 @@ export async function GET(request: Request) {
     externalApiUrl.searchParams.append(key, value)
   })
 
-  const externalResponse = await fetch(`${externalApiUrl}`, {
-    // const externalResponse = await fetch(`${process.env.BASE_URL}/?&fields[]=show_all&page=19&fields[]=rrc`, {
-    credentials: 'include',
-    headers: {
-      'Authorization': `Bearer-Token ${process.env.API_KEY}`,
-      'Content-type': 'application/json, application',
-      'Accept': 'application/json',
-    },
-  })
-
-
   let data
-  try {
-    data = await externalResponse.json()
 
+  try {
+    const externalResponse = await fetch(`${externalApiUrl}`, {
+      // const externalResponse = await fetch(`${process.env.BASE_URL}/?&fields[]=show_all&page=19&fields[]=rrc`, {
+      credentials: 'include',
+      headers: {
+        'Authorization': `Bearer-Token ${process.env.API_KEY}`,
+        'Content-type': 'application/json, application',
+        'Accept': 'application/json',
+      },
+    })
+    // console.log(externalResponse)
+    data = await externalResponse.json()
+    // console.log(data)
   } catch (err) {
     return NextResponse.json({ error: err }, { status: 500 })
   }
