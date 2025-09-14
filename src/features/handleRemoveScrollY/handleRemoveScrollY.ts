@@ -1,4 +1,6 @@
 export default function handleRemoveScrollY() {
-  const pageY = localStorage.getItem('pageY')
-  if (pageY) localStorage.removeItem('pageY')
+  if(typeof window !== 'undefined' && localStorage) {
+    const pageY = localStorage.getItem('pageY')
+    if (pageY) localStorage.removeItem('pageY')
+  }
 }

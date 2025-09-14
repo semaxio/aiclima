@@ -1,5 +1,6 @@
-import Image from 'next/image'
+'use client'
 
+import Image from 'next/image'
 import notFound from '@/../public/not-found.webp'
 import { Button } from '@/components/button/Button'
 import Link from 'next/link'

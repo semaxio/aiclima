@@ -1,5 +1,7 @@
 export default function removeLocalStorage() {
-  localStorage.removeItem('pageNumber')
-  localStorage.removeItem('category')
-  localStorage.removeItem('pageY')
+  if(typeof window !== 'undefined' && localStorage) {
+    localStorage.removeItem('pageNumber')
+    localStorage.removeItem('category')
+    localStorage.removeItem('pageY')
+  }
 }
