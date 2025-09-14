@@ -9,6 +9,7 @@ import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScro
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
 import ServerError from '@/components/serverError/ServerError'
+import ServerWorks from '@/components/serverWorks/ServerWorks'
 
 const Catalog = () => {
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
@@ -34,9 +35,10 @@ const Catalog = () => {
         return res.json()
       })
       .then(data => {
-        setProducts(data)
-        setProductCount(data.total)
-        // console.log(data)
+        if (data?.data.length !== 0) {
+          setProducts(data)
+          setProductCount(data.total)
+        }
       })
       .catch(err => {
         setError('server error')
@@ -72,8 +74,11 @@ const Catalog = () => {
     return (
       <div className="pt-[10px] pb-[45px]">
         <div className="flex flex-wrap gap-[5px] justify-center">
-          {products.data?.length && products.data.map(item => <MobileCard key={item.article} item={item}
-                                                                          page={page} />)}
+          {
+            products?.data?.length > 0
+              ? products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)
+              : <ServerWorks />
+          }
         </div>
         {/*{productCount && <Pagination*/}
         {productCount > 99 && <Pagination
@@ -95,7 +100,11 @@ const Catalog = () => {
           ? (<div className="w-full h-[70vh] flex items-center justify-center"><Spin size={'large'} /></div>)
           : (
             <div className="px-[30px] flex flex-wrap gap-[25px] justify-center">
-              {products.data?.length && products.data.map(item => <Card key={item.article} item={item} page={page} />)}
+              {
+                products.data?.length
+                  ? products.data.map(item => <Card key={item.article} item={item} page={page} />)
+                  : <ServerWorks />
+              }
             </div>
           )
       }
