@@ -2,9 +2,10 @@
 
 import Image from 'next/image'
 import ErrorImage from '../../public/server-error.webp'
+import removeLocalStorage from '@/features/removeLocalStorage/removeLocalStorage'
 
 export default function ErrorPage({ error }: { error: Error }) {
-
+  removeLocalStorage()
   console.log(error)
   return (
     <div className="w-full flex flex-col items-center pt-[80px] gap-[30px] px-[25px]">

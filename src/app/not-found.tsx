@@ -3,9 +3,10 @@ import Image from 'next/image'
 import notFound from '@/../public/not-found.webp'
 import { Button } from '@/components/button/Button'
 import Link from 'next/link'
+import removeLocalStorage from '@/features/removeLocalStorage/removeLocalStorage'
 
 export default function NotFound() {
-
+  removeLocalStorage()
   return (
     <div className='w-full h-full flex flex-col items-center gap-[50px] pt-[50px]'>
       <Image src={notFound} alt={'not found'}/>
