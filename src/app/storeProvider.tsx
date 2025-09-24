@@ -16,7 +16,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return setupListeners(storeRef.current.dispatch)
     }
   }, [])
-  return <Provider store={storeRef.current}>
+  return <Provider store={storeRef.current} key={'storeProviderKey'}>
     <PersistGate loading={null} persistor={persistor}>
       {children}
     </PersistGate>

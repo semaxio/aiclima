@@ -15,7 +15,7 @@ export default function CatalogProvider({ children }: Props) {
   const { id: catalogId } = useParams<{ id?: string }>()
 
   return (
-    <CatalogContext.Provider value={{ catalogId }}>
+    <CatalogContext.Provider value={{ catalogId }} key={'catalogContextKey'}>
       {children}
     </CatalogContext.Provider>
   )

@@ -9,6 +9,7 @@ import '@ant-design/v5-patch-for-react-19'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileBottomMenu from '@/componentsMobile/mobileBottomMenu/MobileBottomMenu'
+import { ReactNode } from 'react'
 
 
 // export const metadata: Metadata = {
@@ -19,7 +20,7 @@ import MobileBottomMenu from '@/componentsMobile/mobileBottomMenu/MobileBottomMe
 export default function RootLayout({
                                      children,
                                    }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
 
   const { isDesktop } = useMediaQuery()
@@ -29,6 +30,7 @@ export default function RootLayout({
     <body className={twMerge(isDesktop ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[5px]')}>
     <StoreProvider>
       <ConfigProvider
+        key={'antDesignProviderKey'}
         theme={{
           components: {
             Carousel: {

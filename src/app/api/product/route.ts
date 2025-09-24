@@ -39,6 +39,7 @@ export async function GET(request: Request) {
         'Accept': 'application/json',
       },
     })
+    // console.log(externalResponse)
     if(!externalResponse.ok) {
       return NextResponse.json({ error: 'server error' }, { status: 500 })
     }

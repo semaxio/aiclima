@@ -58,7 +58,6 @@ const Card = ({ item, page }: { item: ProductCard, page: number }) => {
         category
       },
     }))
-    console.log(item)
   }
 
   function clearProductHandler() {

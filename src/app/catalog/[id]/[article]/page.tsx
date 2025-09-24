@@ -20,6 +20,7 @@ import { Button } from '@/components/button/Button'
 import mappedAttributes from '@/features/mappedAttributes/mappedAttributes'
 import s from './style.module.css'
 import ServerError from '@/components/serverError/ServerError'
+import {useMediaQuery} from "@/hooks/useMediaQuery";
 
 
 export default function Product() {
@@ -35,6 +36,8 @@ export default function Product() {
   const [imageIndex, setImageIndex] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const productDescription = DOMPurify.sanitize(product?.description || '')
+
+  const {isMobile} = useMediaQuery()
 
   useEffect(() => {
     fetch(`/api/product?article=${article}`, { cache: 'force-cache' })
@@ -102,16 +105,27 @@ export default function Product() {
     dispatch(clearProduct({ article: article }))
   }
 
+  const handlerDebugger = () => {
+    // debugger
+    router.back()
+  }
+
   return (
     <div className="pt-[70px] relative">
       <div
         className="text-[14px] flex items-center gap-[8px] hover:opacity-60 absolute top-[15px] left-[15px] cursor-pointer"
-        onClick={() => router.back()}>
+        onClick={() => handlerDebugger()}>
         <Image width={16} height={8} src={ArrowLeft} alt={'ArrowLeft'} />
         Назад
       </div>
-      <div className="flex relative w-full">
-        <div className="w-[50%] h-[480px]">
+      <div className={twMerge(
+          "flex relative w-full",
+          isMobile ? 'flex-col' : ''
+      )}>
+        <div className={twMerge(
+            "h-[480px]",
+            isMobile ? 'w-full' : 'w-[50%]'
+        )}>
           <div className="relative w-full h-[420px]">
             <Image sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw" priority fill
                    src={imagesAndSchemas[imageIndex]}
@@ -138,14 +152,19 @@ export default function Product() {
             ))}
           </div>
         </div>
-        <div className="w-[50%] pl-[50px]">
+        <div className={twMerge(
+            isMobile ? 'w-full px-[10px]' : 'w-[50%] pl-[50px]'
+        )}>
           {product.name && <p className="font-bold text-[18px]">{product.name}</p>}
           {product.brand && <p className="text-[15px] mt-[25px] text-[#6F7682]">Бренд: {product.brand}</p>}
           {product.description && (
             <p className="text-[15px] mt-[10px] text-[#6F7682]"><span className="text-[16px] ">Описание: </span>
               <span className="" dangerouslySetInnerHTML={{ __html: productDescription }} />
             </p>)}
-          {product.rrc && <div className={'flex gap-[30px] items-center mt-[40px] flex-wrap'}>
+          {product.rrc && <div className={twMerge(
+              'flex gap-[30px] items-center mt-[40px] flex-wrap',
+              isMobile ? 'justify-center' : ''
+          )}>
             <p className="text-[18px] text-accent-300 font-bold">{product.rrc.split('.')[0]}р.</p>
             <BasketButton className="w-[160px]" productCount={productCount} addProductAction={addProductHandler}
                           clearProductAction={clearProductHandler} />
