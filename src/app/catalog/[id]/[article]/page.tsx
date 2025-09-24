@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Modal, Spin } from 'antd'
+import { Carousel, Modal, Spin } from 'antd'
 import { ArticleCard } from '@/types/apiResponseTypes/apiResopnses'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
@@ -20,7 +20,8 @@ import { Button } from '@/components/button/Button'
 import mappedAttributes from '@/features/mappedAttributes/mappedAttributes'
 import s from './style.module.css'
 import ServerError from '@/components/serverError/ServerError'
-import {useMediaQuery} from "@/hooks/useMediaQuery";
+import { useMediaQuery } from '@/hooks/useMediaQuery'
+import MobileBasketButton from '@/componentsMobile/mobileBasketButton/MobileBasketButton'
 
 
 export default function Product() {
@@ -37,7 +38,7 @@ export default function Product() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const productDescription = DOMPurify.sanitize(product?.description || '')
 
-  const {isMobile} = useMediaQuery()
+  const { isMobile } = useMediaQuery()
 
   useEffect(() => {
     fetch(`/api/product?article=${article}`, { cache: 'force-cache' })
@@ -105,27 +106,75 @@ export default function Product() {
     dispatch(clearProduct({ article: article }))
   }
 
-  const handlerDebugger = () => {
-    // debugger
-    router.back()
+
+  if (isMobile) {
+    return (
+      <div className="pt-[20px] relative">
+        <div
+          className="text-[12px] flex items-center gap-[6px] opacity-60 absolute top-[5px] left-[10px]"
+          onClick={() => router.back()}>
+          <Image width={14} height={6} src={ArrowLeft} alt={'ArrowLeft'} />
+          Назад
+        </div>
+        <Carousel
+          dotPosition={'bottom'}
+          dots={imagesAndSchemas.length > 1 ? { className: s.customDots } : false}>
+          {
+            imagesAndSchemas.map(img => (
+              <div key={img} className="h-[60vh] w-full relative">
+                <Image fill src={img} alt={'image'} className="w-full object-contain" />
+              </div>
+            ))
+          }
+        </Carousel>
+        <div className="w-full p-[10px]">
+          {product.name && <p className="font-bold text-[18px]">{product.name}</p>}
+
+          <div className="flex justify-between items-center mt-[15px]">
+            {product.brand && <span className="text-[15px] text-[#6F7682]">Бренд: {product.brand}</span>}
+            {product.rrc &&
+              <span className="text-[18px] text-accent-300 font-bold">{product.rrc.split('.')[0]}р.</span>}
+          </div>
+
+          {product.description && (
+            <p className="text-[15px] mt-[10px] text-[#6F7682]"><span className="text-[16px] ">Описание: </span>
+              <span className="" dangerouslySetInnerHTML={{ __html: productDescription }} />
+            </p>)}
+          {product.rrc && <div className="flex gap-[30px] items-center mt-[20px] justify-between">
+            <Button variant="outline" className="text-[13px] font-medium px-[10px] py-[5px]">Купить в один клик</Button>
+            <MobileBasketButton
+              className="w-[160px]"
+              productCount={productCount}
+              addProductAction={addProductHandler}
+              clearProductAction={clearProductHandler} />
+          </div>}
+        </div>
+        <div className="text-[#6F7682] py-[30px] w-full flex items-center flex-col">
+          <p className="text-[14px]">Все характеристики:</p>
+          {
+            product.attributes && mappedAttributes(product.attributes).map((attr, index) => (
+              <div key={index + attr[0]}
+                   className="w-full max-w-[1000px] gap-[10px] flex justify-between relative text-[12px]">
+                <span className={s.productTitle}>{attr[0]}</span>
+                <span>{attr[1]}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    )
   }
 
   return (
     <div className="pt-[70px] relative">
       <div
         className="text-[14px] flex items-center gap-[8px] hover:opacity-60 absolute top-[15px] left-[15px] cursor-pointer"
-        onClick={() => handlerDebugger()}>
+        onClick={() => router.back()}>
         <Image width={16} height={8} src={ArrowLeft} alt={'ArrowLeft'} />
         Назад
       </div>
-      <div className={twMerge(
-          "flex relative w-full",
-          isMobile ? 'flex-col' : ''
-      )}>
-        <div className={twMerge(
-            "h-[480px]",
-            isMobile ? 'w-full' : 'w-[50%]'
-        )}>
+      <div className="flex relative w-full">
+        <div className="h-[480px] w-[50%]">
           <div className="relative w-full h-[420px]">
             <Image sizes="(max-width: 600px) 100vw, (max-width: 1200px) 50vw, 33vw" priority fill
                    src={imagesAndSchemas[imageIndex]}
@@ -152,19 +201,14 @@ export default function Product() {
             ))}
           </div>
         </div>
-        <div className={twMerge(
-            isMobile ? 'w-full px-[10px]' : 'w-[50%] pl-[50px]'
-        )}>
+        <div className="w-[50%] pl-[50px]">
           {product.name && <p className="font-bold text-[18px]">{product.name}</p>}
           {product.brand && <p className="text-[15px] mt-[25px] text-[#6F7682]">Бренд: {product.brand}</p>}
           {product.description && (
             <p className="text-[15px] mt-[10px] text-[#6F7682]"><span className="text-[16px] ">Описание: </span>
               <span className="" dangerouslySetInnerHTML={{ __html: productDescription }} />
             </p>)}
-          {product.rrc && <div className={twMerge(
-              'flex gap-[30px] items-center mt-[40px] flex-wrap',
-              isMobile ? 'justify-center' : ''
-          )}>
+          {product.rrc && <div className="flex gap-[30px] items-center mt-[40px] flex-wrap">
             <p className="text-[18px] text-accent-300 font-bold">{product.rrc.split('.')[0]}р.</p>
             <BasketButton className="w-[160px]" productCount={productCount} addProductAction={addProductHandler}
                           clearProductAction={clearProductHandler} />

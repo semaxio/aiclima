@@ -15,6 +15,8 @@ import { Typography } from '@/components/typography/Typography'
 import Link from 'next/link'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import removeLocalStorage from '@/features/removeLocalStorage/removeLocalStorage'
+import { useEffect } from 'react'
 
 const popularCategories = [
   {
@@ -60,14 +62,18 @@ const Catalog = () => {
 
   const { isDesktop } = useMediaQuery()
 
+  useEffect(() => {
+    removeLocalStorage()
+  }, [])
+
   if (!isDesktop) {
     return (
-      <div className='flex gap-[8px] flex-col pt-[15px] pb-[25px]'>
+      <div className="flex gap-[8px] flex-col pt-[15px] pb-[25px]">
         {
           Object.entries(filterCategory).map(c => (
             <Link href={`/catalog/${c[0]}`}
-              key={`category-${c[0]}`}
-              className="w-[100%] text-gray-500 text-[14px] font-medium border border-gray-200 rounded-[9px] py-[5px] px-[8px]"
+                  key={`category-${c[0]}`}
+                  className="w-[100%] text-gray-500 text-[14px] font-medium border border-gray-200 rounded-[9px] py-[5px] px-[8px]"
             >
               {c[1]}
             </Link>),

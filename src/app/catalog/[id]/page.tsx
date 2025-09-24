@@ -1,18 +1,17 @@
 'use client'
 
-import {useContext, useEffect, useLayoutEffect, useState} from 'react'
-import {ResponseType} from '@/types/apiResponseTypes/apiResopnses'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { ResponseType } from '@/types/apiResponseTypes/apiResopnses'
 import Card from '@/components/card/Card'
-import {Pagination, Spin} from 'antd'
-import {CatalogContext} from '@/lib/catalog/CatalogProvider'
+import { Pagination, Spin } from 'antd'
+import { CatalogContext } from '@/lib/catalog/CatalogProvider'
 import handleRemoveScrollY from '@/features/handleRemoveScrollY/handleRemoveScrollY'
-import {useMediaQuery} from '@/hooks/useMediaQuery'
+import { useMediaQuery } from '@/hooks/useMediaQuery'
 import MobileCard from '@/componentsMobile/mobileCard/MobileCard'
 import ServerError from '@/components/serverError/ServerError'
 import ServerWorks from '@/components/serverWorks/ServerWorks'
 
 const Catalog = () => {
-  // debugger
   const storagePage = localStorage.getItem('pageNumber') && Number(localStorage.getItem('pageNumber'))
   const { catalogId } = useContext(CatalogContext)
   const [products, setProducts] = useState<ResponseType>({} as ResponseType)
@@ -20,7 +19,7 @@ const Catalog = () => {
   const [error, setError] = useState<string | null>(null)
   const [productCount, setProductCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true) // false
-  const {isDesktop} = useMediaQuery()
+  const { isDesktop } = useMediaQuery()
 
   useLayoutEffect(() => {
     const pageY = localStorage.getItem('pageY')
@@ -28,22 +27,22 @@ const Catalog = () => {
   }, [products])
 
   useEffect(() => {
-    fetch(`/api/homepage?page=${page}&filter_category=${catalogId}`, {cache: 'force-cache'})
-        .then(res => {
-          if (res.status === 500) throw res
-          return res.json()
-        })
-        .then(data => {
-          if (data?.data.length !== 0) {
-            setProducts(data)
-            setProductCount(data.total)
-          }
-        })
-        .catch(err => {
-          setError('server error')
-          console.log(err)
-        })
-        .finally(() => setIsLoading(false))
+    fetch(`/api/homepage?page=${page}&filter_category=${catalogId}`, { cache: 'force-cache' })
+      .then(res => {
+        if (res.status === 500) throw res
+        return res.json()
+      })
+      .then(data => {
+        if (data?.data.length !== 0) {
+          setProducts(data)
+          setProductCount(data.total)
+        }
+      })
+      .catch(err => {
+        setError('server error')
+        console.log(err)
+      })
+      .finally(() => setIsLoading(false))
   }, [catalogId, page])
 
   useEffect(() => {
@@ -54,62 +53,62 @@ const Catalog = () => {
   function paginationHandler(page: number) {
     setPage(page)
     localStorage.setItem('pageNumber', page.toString())
-    window.scrollTo({top: 0})
+    window.scrollTo({ top: 0 })
     handleRemoveScrollY()
   }
 
 
-  if (error) return <ServerError/>
+  if (error) return <ServerError />
 
   if (!isDesktop) {
     if (isLoading) {
       return (
-          <div className="h-[80vh]">
-            <Spin className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'}/>
-          </div>
+        <div className="h-[80vh]">
+          <Spin className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" size={'large'} />
+        </div>
       )
     }
     return (
-        <div className="pt-[10px] pb-[45px]">
-          <div className="flex flex-wrap gap-[5px] justify-center">
-            {
-              products?.data?.length > 0
-                  ? products.data.map(item => <MobileCard key={item.article} item={item} page={page}/>)
-                  : <ServerWorks/>
-            }
-          </div>
-          {productCount > 99 && <Pagination
-              size="small"
-              onChange={(page) => paginationHandler(page)}
-              defaultCurrent={page} total={productCount}
-              showSizeChanger={false} pageSize={100}
-              className="h-[30px] bg-white flex justify-center items-center fixed bottom-[65px] w-[100%] left-0"
-          />}
+      <div className="pt-[10px] pb-[45px]">
+        <div className="flex flex-wrap gap-[5px] justify-center">
+          {
+            products?.data?.length > 0
+              ? products.data.map(item => <MobileCard key={item.article} item={item} page={page} />)
+              : <ServerWorks />
+          }
         </div>
+        {productCount > 99 && <Pagination
+          size="small"
+          onChange={(page) => paginationHandler(page)}
+          defaultCurrent={page} total={productCount}
+          showSizeChanger={false} pageSize={100}
+          className="h-[30px] bg-white flex justify-center items-center fixed bottom-[65px] w-[100%] left-0"
+        />}
+      </div>
     )
   }
 
   return (
-      <div className="w-full">
-        {
-          isLoading
-              ? (<div className="w-full h-[70vh] flex items-center justify-center"><Spin size={'large'}/></div>)
-              : (
-                  <div className="px-[30px] flex flex-wrap gap-[25px] justify-center">
-                    {
-                      products?.data?.length > 0
-                          ? products.data.map(item => <Card key={item.article} item={item} page={page}/>)
-                          : <ServerWorks/>
-                    }
-                  </div>
-              )
-        }
-        {productCount > 99 && (<div
-            className="w-full h-[40px] flex justify-center items-center z-[1000] bg-white fixed bottom-0 right-0 left-0">
-          <Pagination onChange={(page) => paginationHandler(page)} defaultCurrent={page} total={productCount}
-                      showSizeChanger={false} pageSize={100}/>
-        </div>)}
-      </div>
+    <div className="w-full">
+      {
+        isLoading
+          ? (<div className="w-full h-[70vh] flex items-center justify-center"><Spin size={'large'} /></div>)
+          : (
+            <div className="px-[30px] flex flex-wrap gap-[25px] justify-center">
+              {
+                products?.data?.length > 0
+                  ? products.data.map(item => <Card key={item.article} item={item} page={page} />)
+                  : <ServerWorks />
+              }
+            </div>
+          )
+      }
+      {productCount > 99 && (<div
+        className="w-full h-[40px] flex justify-center items-center z-[1000] bg-white fixed bottom-0 right-0 left-0">
+        <Pagination onChange={(page) => paginationHandler(page)} defaultCurrent={page} total={productCount}
+                    showSizeChanger={false} pageSize={100} />
+      </div>)}
+    </div>
   )
 }
 
