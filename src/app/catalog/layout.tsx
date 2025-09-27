@@ -12,15 +12,15 @@ type Props = Readonly<{
 }>
 
 export default function Layout({ children }: Props) {
-  const { isDesktop } = useMediaQuery()
+  const { isNetbook, isDesktop } = useMediaQuery()
 
   return (
     <CatalogProvider>
       <div className={twMerge(
         'pt-[20px] pb-[70px]',
-        isDesktop && 'pl-[280px]',
+        (isDesktop || isNetbook) && 'pl-[280px]',
       )}>
-        {isDesktop && <CatalogItems />}
+        {(isDesktop || isNetbook) && <CatalogItems />}
         <CatalogBreadCrumbs />
         {children}
       </div>

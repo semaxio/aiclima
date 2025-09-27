@@ -23,11 +23,11 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
 
-  const { isDesktop } = useMediaQuery()
+  const { isMobile, isTablet, isDesktop, isNetbook } = useMediaQuery()
 
   return (
     <html lang="en">
-    <body className={twMerge(isDesktop ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[5px]')}>
+    <body className={twMerge((isDesktop || isNetbook) ? 'px-[45px] pt-[125px]' : 'pt-[70px] px-[5px]')}>
     <StoreProvider>
       <ConfigProvider
         key={'antDesignProviderKey'}
@@ -38,18 +38,18 @@ export default function RootLayout({
               dotWidth: 3,
               dotGap: 1.5,
               dotActiveWidth: 3,
-              dotOffset: 5
+              dotOffset: 5,
             },
             Pagination: {
-              colorText	: '#63b0ff',
-              fontSize: 12
-            }}
-        }}
+              colorText: '#63b0ff',
+              fontSize: 12,
+            },
+        }}}
       >
         <Header />
         {children}
         <Basket />
-        {!isDesktop && <MobileBottomMenu />}
+        {(isMobile || isTablet) && <MobileBottomMenu />}
       </ConfigProvider>
     </StoreProvider>
     </body>

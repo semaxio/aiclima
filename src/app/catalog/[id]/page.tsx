@@ -19,7 +19,7 @@ const Catalog = () => {
   const [error, setError] = useState<string | null>(null)
   const [productCount, setProductCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true) // false
-  const { isDesktop } = useMediaQuery()
+  const {  isTablet, isMobile } = useMediaQuery()
 
   useLayoutEffect(() => {
     const pageY = localStorage.getItem('pageY')
@@ -60,7 +60,7 @@ const Catalog = () => {
 
   if (error) return <ServerError />
 
-  if (!isDesktop) {
+  if (isTablet || isMobile) {
     if (isLoading) {
       return (
         <div className="h-[80vh]">

@@ -12,19 +12,21 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function CatalogBreadCrumbs() {
   const { catalogId } = useContext(CatalogContext)
-  const { isDesktop } = useMediaQuery()
+  const { isTablet, isMobile } = useMediaQuery()
 
-  if (!isDesktop) {
+  if (isMobile || isTablet) {
     return (
-      <div className="flex gap-[55px] w-[100vw] items-cente fixed left-0 h-[35px] top-[60px] px-[10px] bg-white z-[1000]">
+      <div
+        className="flex gap-[55px] w-[100vw] items-cente fixed left-0 h-[35px] top-[60px] px-[10px] bg-white z-[1000]">
         <div className="flex gap-[6px] items-center">
-          <Link href="/" className='items-center flex'><Typography variant="menu_link" className="text-[11px]">Главная</Typography></Link>
+          <Link href="/" className="items-center flex"><Typography variant="menu_link"
+                                                                   className="text-[11px]">Главная</Typography></Link>
           <Image src={ArrowRight} width={10} height={10} alt="ArrowRight" />
-          <Link href="/catalog" className='items-center flex'><Typography variant="menu_link" className="text-[11px]">Все
+          <Link href="/catalog" className="items-center flex"><Typography variant="menu_link" className="text-[11px]">Все
             категории</Typography></Link>
           {catalogId && <>
             <Image src={ArrowRight} width={10} height={10} alt="ArrowRight" />
-            <Link href={`/catalog/${catalogId}`} className='flex items-center'>
+            <Link href={`/catalog/${catalogId}`} className="flex items-center">
               <Typography variant="menu_link" className="text-[11px]">{filterCategory[catalogId]}</Typography>
             </Link>
           </>

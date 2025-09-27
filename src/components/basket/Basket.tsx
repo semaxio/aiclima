@@ -12,7 +12,7 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 
 export default function Basket() {
 
-  const {isDesktop} = useMediaQuery()
+  const { isMobile, isTablet } = useMediaQuery()
 
   const dispatch = useAppDispatch()
   const isOpen = useAppSelector(selectIsOpenBasket)
@@ -34,9 +34,14 @@ export default function Basket() {
     )
   }
 
-  if(!isDesktop) {
+  if (isMobile || isTablet) {
     return (
-      <Drawer open={isOpen} size={'large'} onClose={() => dispatch(changeIsOpenBasket({ isOpen: false }))}>
+      <Drawer
+        open={isOpen}
+        size={'large'}
+        onClose={() => dispatch(changeIsOpenBasket({ isOpen: false }))}
+        styles={{ body: { padding: '15px 8px' } }}
+      >
         <div className="w-full h-full flex flex-col gap-[20px] text-gray-500 pb-[50px]">
           <BasketItems basket={basket} />
           <div className="mt-[25px] pt-[20px] border-t border-t-gray-300 pb-[50px]">

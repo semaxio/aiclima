@@ -60,13 +60,13 @@ const popularCategories = [
 
 const Catalog = () => {
 
-  const { isDesktop } = useMediaQuery()
+  const { isMobile, isTablet } = useMediaQuery()
 
   useEffect(() => {
     removeLocalStorage()
   }, [])
 
-  if (!isDesktop) {
+  if (isMobile || isTablet) {
     return (
       <div className="flex gap-[8px] flex-col pt-[15px] pb-[25px]">
         {

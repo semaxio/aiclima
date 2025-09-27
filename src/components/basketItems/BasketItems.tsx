@@ -14,7 +14,7 @@ type Props = {
 }
 
 export default function BasketItems({ basket }: Props) {
-  const { isDesktop } = useMediaQuery()
+  const { isMobile, isTablet } = useMediaQuery()
   const dispatch = useAppDispatch()
 
   const addProductHandler = (article: string) => dispatch(addProduct({ article }))
@@ -22,13 +22,16 @@ export default function BasketItems({ basket }: Props) {
   const clearArticleHandler = (article: string) => dispatch(clearArticle({ article }))
 
 
-  if (!isDesktop) {
+  if (isMobile || isTablet) {
     return (
-      <div className="flex flex-col gap-[25px]">
+      <div className="flex flex-col gap-[15px]">
         {
           basket.map(product => (
-            <div key={product.article} className="text-[14px] w-full">
-              <div className='flex justify-between items-center'>
+            <div
+              key={product.article}
+              className="text-[14px] p-[10px] rounded-[5px] w-full bg-[#fbfbfb] border border-[#f2f2f2]"
+            >
+              <div className="flex justify-between items-center">
                 <Image
                   className="" width={120} height={120}
                   src={[...product.info.images, ...product.info.schemas][0]}

@@ -19,7 +19,7 @@ export default function Page() {
   const basket = useAppSelector(selectBasket)
   const [isSending, setIsSending] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const { isMobile } = useMediaQuery()
+  const { isMobile, isTablet } = useMediaQuery()
 
   const clearBasketHandler = () => dispatch(clearBasket())
 
@@ -54,7 +54,7 @@ export default function Page() {
       <div className="h-full w-full flex flex-col gap-[25px] justify-center items-center">
         <h2 className={twMerge(
           "text-accent-600 font-medium",
-          isMobile ? 'text-[15px] mt-[200px]' :  'text-[25px]'
+          (isMobile || isTablet) ? 'text-[15px] mt-[200px]' :  'text-[25px]'
         )}>Товары к оформлению отсутствуют</h2>
         <Link href={'/catalog'}>
           <Button variant="primary" className="text-[#fff]">В каталог</Button>
@@ -73,7 +73,7 @@ export default function Page() {
           variant="outline"
           className={twMerge(
             'flex gap-[10px] text-[14px]',
-            isMobile && 'hidden',
+            (isMobile || isTablet) && 'hidden',
           )}>
           <Image src={Recycle} width={15} height={15} alt={'recycle'} />
           Очистить всю корзину
@@ -90,7 +90,7 @@ export default function Page() {
         </div>
       </div>
       {
-        isMobile && (
+        (isMobile || isTablet) && (
           <Button
             onClick={clearBasketHandler}
             variant="outline"

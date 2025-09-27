@@ -38,7 +38,7 @@ export default function Product() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const productDescription = DOMPurify.sanitize(product?.description || '')
 
-  const { isMobile } = useMediaQuery()
+  const { isMobile, isTablet } = useMediaQuery()
 
   useEffect(() => {
     fetch(`/api/product?article=${article}`, { cache: 'force-cache' })
@@ -107,7 +107,7 @@ export default function Product() {
   }
 
 
-  if (isMobile) {
+  if (isMobile || isTablet) {
     return (
       <div className="pt-[20px] relative">
         <div
